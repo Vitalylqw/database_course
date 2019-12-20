@@ -1,0 +1,11 @@
+Набор команд в командной строке для решения задач 3 и 4
+
+1. mysqldump example > example.dump
+
+2. mysql
+
+3. create if not exists database sample
+
+4. use sample
+
+5. source example.dump
