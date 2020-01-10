@@ -1,0 +1,3 @@
+Команда в линукс для выполнения задания 4
+
+mysqldump --where="true limit 100"  mysql help_keyword > help_key_word.sql
