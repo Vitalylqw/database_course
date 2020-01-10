@@ -83,5 +83,12 @@ updated_at datetime default now() on update now()
 
 update friendship_statuses set name='Interrupted' where name='Canceled';
 
+alter table profiles add column update_at datetime default now() on update now();
 
+
+create table if not exists meetings (
+id int unsigned not null auto_increment primary key,
+name varchar(150) not null unique,
+sheduled_at datetime
+ );
 
