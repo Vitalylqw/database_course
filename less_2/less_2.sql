@@ -8,8 +8,8 @@ drop TABLE if exists users;
 
 create TABLE if not EXISTS users (
 id serial primary key,
-name varchar(255) comment 'Наименование пользователя'
-) comment='Пользователи';
+name varchar(255) comment 'РќР°РёРјРµРЅРѕРІР°РЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ'
+) comment='РџРѕР»СЊР·РѕРІР°С‚РµР»Рё';
 
 insert into users VALUES 
 (0,'user'),
