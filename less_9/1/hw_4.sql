@@ -4,4 +4,3 @@
 
 -- 1 вариант
 DELETE FROM users WHERE id  not in (select* from (SELECT id FROM users ORDER BY created_at DESC LIMIT 5) as id);
-
