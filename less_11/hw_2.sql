@@ -55,7 +55,8 @@ END//
 DROP PROCEDURE create_users//
 
 -- Самый быстрый и эффективный способ это сохранить в файл и занрузка из файла. Выйгрыш космический по времени.
--- Быстрее всего получается , если разбивать данные по 50 -100 тысч строк. Тогда на весь процесс уходит не более 20 минут
+-- Если ресурсы сервера не большие, то Быстрее всего получается , если разбивать данные по 50 -100 тысяч строк. 
+-- Тогда на весь процесс уходит не более 20 минут
 DROP PROCEDURE create_users//
 
 CREATE PROCEDURE create_users(number_of_users int)
@@ -75,7 +76,7 @@ END//
 
 -- К Сожалению нельзя использовать в процедуре into OUTFILE. Поэтому выполним его после того как процедура отработает
 
-CALL create_users(5)//
+CALL create_users(50000)//
 
 LOAD DATA  INFILE '/var/lib/mysql-files/data.csv' INTO TABLE users  FIELDS TERMINATED BY ','  LINES TERMINATED  BY ';' (name,birthday_at)  //
 
