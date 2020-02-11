@@ -1,0 +1,5 @@
+Организуйте хранение категорий и товарных позиций учебной базы данных shop в СУБД MongoDB.
+
+db.shop.insert ({name:'catalog', content:({id : 1, name : 'Процессоры'},{id : 2, name : 'Материнчкие платы'})})
+
+db.shop.insert ({name:'product', content:({id : 1, name : 'Процессор Pentium', catalog_id : 1, price: 5000},{id : 2, name : 'Материнская плата Gforce', catalog_id : 2, price: 6000})})
