@@ -232,3 +232,92 @@ FROM product p
 	JOIN test_imp.lost l ON p.model=l.artikul
 	JOIN test_imp.import_data id ON l.artikul=id.model;
 
+
+-- Процедура добавления нового товара
+CREATE PROCEDURE add_products()
+BEGIN
+	TRUNCATE test_imp.lost;
+	START TRANSACTION;
+		INSERT INTO test_imp.lost (artikul)
+		SELECT id.model FROM test_imp.import_data id  
+			LEFT JOIN 	product p ON id.model=p.model
+		WHERE p.model IS NULL;
+		INSERT INTO product 
+			(model,
+			sku,
+			upc,
+			ean,
+			jan,
+			isbn,
+			mpn,
+			location,
+			stock_status_id,
+			image,
+			manufacturer_id,
+			tax_class_id,
+			weight_class_id,
+			length_class_id,
+			minimum,
+			status,
+			date_added,
+			date_modified)
+		SELECT 
+			id.model,
+			id.sku,
+			'' a,
+			'' b ,
+			'' c ,
+			'' d ,
+			''e ,
+			'' f,
+			5,
+			CONCAT('catalog/images_small/',id.model,'.jpg'),
+			m.manufacturer_id,
+			0,
+			1,
+			1,
+			id.minimum,
+			1,
+			now(),
+			now()
+		FROM test_imp.import_data  id 
+			JOIN test_imp.lost l ON id.model=l.artikul 
+			JOIN category c ON id.category_id=c.category_id
+			JOIN manufacturer m ON id.Brand_Nm=m.name;
+		INSERT INTO product_description
+			SELECT 
+			product_id,
+			1,
+			id.name,
+			CONCAT(c.name,': ',id.name),
+			c.name,
+			id.name,
+			id.name,
+			CONCAT(c.name,': ',id.name),
+			CONCAT(c.name,': ',id.name)
+			FROM product p
+				JOIN test_imp.lost l ON p.model=l.artikul
+				JOIN test_imp.import_data id ON l.artikul=id.model
+				JOIN category_description c ON c.category_id=id.category_id;
+		INSERT INTO product_to_store(product_id)
+			SELECT  product_id 
+			FROM product p
+				JOIN test_imp.lost l ON p.model=l.artikul;
+		INSERT INTO product_to_category
+			SELECT  product_id, id.category_id,1 
+			FROM product p
+				JOIN test_imp.lost l ON p.model=l.artikul
+				JOIN test_imp.import_data id ON l.artikul=id.model;
+		INSERT INTO url_alias (query,keyword)
+			SELECT CONCAT('product_id=',p.product_id),translit(id.name)
+			FROM product p
+				JOIN test_imp.lost l ON p.model=l.artikul
+				JOIN test_imp.import_data id ON l.artikul=id.model;
+	COMMIT;		
+	TRUNCATE test_imp.lost;
+END;
+DROP PROCEDURE add_products;
+CALL add_products();
+
+
+
