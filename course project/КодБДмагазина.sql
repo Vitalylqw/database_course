@@ -1,8 +1,11 @@
 -- создадим служебную БД
+DROP  database test_imp;
 CREATE DATABASE  test_imp CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 
 -- Таблица  import_data в служебной БД 
+DROP table  import_data;
+
 CREATE TABLE import_data (
 id SERIAL PRIMARY KEY,
 model varchar(64) UNIQUE,
