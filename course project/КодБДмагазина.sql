@@ -319,8 +319,10 @@ BEGIN
 	COMMIT;		
 	TRUNCATE test_imp.lost;
 END;
-DROP PROCEDURE add_products;
-CALL add_products();
 
+DROP PROCEDURE add_products;
+
+CALL add_products();
+CALL update_price_count();
 
 
